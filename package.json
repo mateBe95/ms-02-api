@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "netlify": "netlify dev"
   },
   "repository": {
     "type": "git",
@@ -19,9 +18,12 @@
   "homepage": "https://github.com/mateBe95/ms-02-api#readme",
   "description": "",
   "dependencies": {
+    "@netlify/functions": "^4.2.7",
+    "@types/express": "^5.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "serverless-http": "^4.0.0"
   }
 }

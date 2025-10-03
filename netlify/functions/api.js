@@ -1,7 +1,8 @@
 // netlify/functions/api.js
 import express, { Router } from "express";
 const serverless = require('serverless-http');
-import datasetsRouter from "./dataset.js";
+import datasetsRouter from "./datasets.js";
+import suggestionsRouter from "./suggestions.js";
 
 const app = express();
 
@@ -227,6 +228,7 @@ router.delete('/users/:id', async (req, res) => {
 // Montuj router
 app.use("/api/", router);
 router.use("/datasets", datasetsRouter);
+router.use("/suggestions", suggestionsRouter);
 router.use((req, res) => {
   res.status(404).json({
     success: false,

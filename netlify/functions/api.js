@@ -1,10 +1,14 @@
 // netlify/functions/api.js
 import express, { Router } from "express";
 const serverless = require('serverless-http');
+import datasetsRouter from "./dataset.js";
 
 const app = express();
 
-const router = Router();
+const router = express.Router({
+	caseSensitive: true,
+	mergeParams: true
+});
 
 // ============ MIDDLEWARE ============
 
@@ -219,6 +223,10 @@ router.delete('/users/:id', async (req, res) => {
 // ============ ERROR HANDLING ============
 
 // 404 handler
+
+// Montuj router
+app.use("/api/", router);
+router.use("/datasets", datasetsRouter);
 router.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -226,7 +234,5 @@ router.use((req, res) => {
   });
 });
 
-// Montuj router
-app.use("/api/", router);
 // Eksportuj jako serverless function
 module.exports.handler = serverless(app);

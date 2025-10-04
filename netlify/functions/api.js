@@ -3,6 +3,7 @@ import express, { Router } from "express";
 const serverless = require('serverless-http');
 import datasetsRouter from "./datasets.js";
 import suggestionsRouter from "./suggestions.js";
+import reviewsRouter from "./reviews.js";
 
 const app = express();
 
@@ -229,6 +230,7 @@ router.delete('/users/:id', async (req, res) => {
 app.use("/api/", router);
 router.use("/datasets", datasetsRouter);
 router.use("/suggestions", suggestionsRouter);
+router.use("/reviews", reviewsRouter);
 router.use((req, res) => {
   res.status(404).json({
     success: false,

@@ -12,6 +12,7 @@ let suggestions = [
         description: 'Proponuję dodanie sum kontrolnych MD5 dla każdego pliku w zbiorze, aby umożliwić weryfikację integralności pobranych danych. To standard w repozytoriach naukowych.',
         date: '2024-09-18',
         upvotes: 15,
+        downvotes: 0,
         status: 'open'
     },
     {
@@ -23,6 +24,7 @@ let suggestions = [
         description: 'W pliku "samples_batch2.csv" kolumna "temprature" powinna być "temperature". Literówka może powodować problemy przy automatycznym przetwarzaniu.',
         date: '2024-09-22',
         upvotes: 23,
+        downvotes: 0,
         status: 'acknowledged'
     },
     {
@@ -34,6 +36,7 @@ let suggestions = [
         description: 'Zbiór nie zawiera wyraźnej informacji o licencji. Sugeruję dodanie pliku LICENSE z jasnym określeniem warunków użytkowania (np. CC BY 4.0).',
         date: '2024-09-25',
         upvotes: 19,
+        downvotes: 5,
         status: 'open'
     },
     {
@@ -45,6 +48,7 @@ let suggestions = [
         description: 'Dane z 2022 roku nie zostały zaktualizowane o nowe pomiary z 2023 roku.',
         date: '2024-09-28',
         upvotes: 8,
+        downvotes: 0,
         status: 'open'
     },
     {
@@ -56,6 +60,7 @@ let suggestions = [
         description: 'Brakuje szczegółowych metadanych dotyczących lokalizacji stacji meteorologicznych.',
         date: '2024-09-30',
         upvotes: 12,
+        downvotes: 0,
         status: 'open'
     },
     {
@@ -67,6 +72,7 @@ let suggestions = [
         description: 'Kilka obrazów RTG jest rozmytych i nie nadaje się do analizy.',
         date: '2024-10-02',
         upvotes: 5,
+        downvotes: 0,
         status: 'open'
     },
     {
@@ -78,6 +84,7 @@ let suggestions = [
         description: 'Warto dodać przedział wiekowy pacjentów do metadanych obrazów.',
         date: '2024-10-03',
         upvotes: 7,
+        downvotes: 0,
         status: 'open'
     },
     {
@@ -89,6 +96,7 @@ let suggestions = [
         description: 'W pliku "europe_temp.csv" jednostki temperatury są podane w F, a powinny być w C.',
         date: '2024-10-04',
         upvotes: 10,
+        downvotes: 0,
         status: 'acknowledged'
     },
     {
@@ -100,6 +108,7 @@ let suggestions = [
         description: 'Brakuje szczegółowego opisu klasyfikacji obrazów RTG w zbiorze.',
         date: '2024-10-05',
         upvotes: 4,
+        downvotes: 0,
         status: 'open'
     }
 ];
@@ -139,11 +148,23 @@ router.put('/:id', (req, res) => {
 });
 
 // Głosowanie na sugestię
-router.post('/:id/upvote', (req, res) => {
-    const id = parseInt(req.params.id);
+router.post('/:id/vote', (req, res) => {
+    const id = Number(req.params.id);
+    const { type } = req.body; // "up" | "down"
     const suggestion = suggestions.find(s => s.id === id);
-    if (!suggestion) return res.status(404).json({ success: false, message: "Sugestia nie znaleziona" });
-    suggestion.upvotes += 1;
+
+    if (!suggestion) {
+        return res.status(404).json({ success: false, message: 'Sugestia not found' });
+    }
+
+    if (type === 'up') {
+        suggestion.upvotes += 1;
+    } else if (type === 'down') {
+        suggestion.downvotes += 1;
+    } else {
+        return res.status(400).json({ success: false, message: 'Invalid vote type' });
+    }
+
     res.json({ success: true, data: suggestion });
 });
 

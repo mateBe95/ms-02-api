@@ -12,6 +12,7 @@ let reviews = [
         status: 'published',
         content: 'Zbiór danych jest bardzo kompletny i dobrze zorganizowany. Dane są czyste i gotowe do analiz. Jedynym mankamentem jest brak szczegółowego opisu metodyki pobierania próbek oraz informacji o warunkach przechowywania materiału biologicznego.',
         upvotes: 12,
+        downvotes: 2,
         comments: 3
     },
     {
@@ -23,7 +24,8 @@ let reviews = [
         date: '2024-09-25',
         status: 'published',
         content: 'Dataset zawiera cenne informacje genomiczne, jednak format danych nie jest zgodny ze standardami FAIR. Sugeruję dodanie metadanych w formacie JSON-LD oraz przygotowanie pliku README zgodnego z wytycznymi DataCite.',
-        upvotes: 8,
+        upvotes: 0,
+        downvotes: 0,
         comments: 5
     },
     {
@@ -36,6 +38,7 @@ let reviews = [
         status: 'published',
         content: 'Doskonale przygotowany dataset z kompletnymi metadanymi, dokumentacją oraz skryptami do przetwarzania. Dane są wysokiej jakości i łatwe w użyciu. Idealny do badań zmian klimatu.',
         upvotes: 28,
+        downvotes: 0,
         comments: 2
     },
     {
@@ -48,6 +51,7 @@ let reviews = [
         status: 'published',
         content: 'Dane są dobrze przygotowane, ale brakuje pełnych serii historycznych. Dobrze byłoby dodać dane z lat wcześniejszych dla pełnej analizy trendów.',
         upvotes: 5,
+        downvotes: 0,
         comments: 1
     },
     {
@@ -60,6 +64,7 @@ let reviews = [
         status: 'published',
         content: 'Niektóre rekordy mają brakujące wartości i niezgodności w metadanych. Zalecam weryfikację i oczyszczenie danych przed dalszym wykorzystaniem.',
         upvotes: 7,
+        downvotes: 0,
         comments: 2
     },
     {
@@ -72,6 +77,7 @@ let reviews = [
         status: 'published',
         content: 'Dane są kompletne, dobrze opisane i łatwe do wykorzystania w analizach porównawczych. Polecam dla wszystkich badań w tej dziedzinie.',
         upvotes: 15,
+        downvotes: 0,
         comments: 3
     },
     {
@@ -84,6 +90,7 @@ let reviews = [
         status: 'published',
         content: 'Dane są użyteczne, jednak brak szczegółowego opisu metodologii. Trzeba to uzupełnić, aby umożliwić pełną reprodukcję wyników.',
         upvotes: 4,
+        downvotes: 0,
         comments: 1
     },
     {
@@ -96,6 +103,7 @@ let reviews = [
         status: 'published',
         content: 'Dane są kompletne i dobrze przygotowane do natychmiastowej analizy. Polecam do kursów i projektów badawczych.',
         upvotes: 10,
+        downvotes: 0,
         comments: 2
     }
 ];
@@ -170,12 +178,23 @@ router.delete('/:id', (req, res) => {
 });
 
 // POST /api/reviews/:id/upvote - głosowanie
-router.post('/:id/upvote', (req, res) => {
+router.post('/:id/vote', (req, res) => {
     const id = Number(req.params.id);
+    const { type } = req.body; // "up" | "down"
     const review = reviews.find(r => r.id === id);
-    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
 
-    review.upvotes += 1;
+    if (!review) {
+        return res.status(404).json({ success: false, message: 'Review not found' });
+    }
+
+    if (type === 'up') {
+        review.upvotes += 1;
+    } else if (type === 'down') {
+        review.downvotes += 1;
+    } else {
+        return res.status(400).json({ success: false, message: 'Invalid vote type' });
+    }
+
     res.json({ success: true, data: review });
 });
 

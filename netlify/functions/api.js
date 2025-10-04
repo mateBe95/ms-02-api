@@ -4,6 +4,7 @@ const serverless = require('serverless-http');
 import datasetsRouter from "./datasets.js";
 import suggestionsRouter from "./suggestions.js";
 import reviewsRouter from "./reviews.js";
+import commentsRouter from "./comments.js";
 
 const app = express();
 
@@ -231,6 +232,7 @@ app.use("/api/", router);
 router.use("/datasets", datasetsRouter);
 router.use("/suggestions", suggestionsRouter);
 router.use("/reviews", reviewsRouter);
+router.use("/comments", commentsRouter);
 router.use((req, res) => {
   res.status(404).json({
     success: false,

@@ -42,9 +42,9 @@ router.get('/', async (req, res) => {
 					title: 'Enlarged foramen mentale / Poszerzony otwór bródki',
 					author: 'Zespół PCN2',
 					date: '2024-07-10',
-					reviews: 4,
-					avgRating: 4.6,
-					suggestions: 3,
+					reviews: 0,
+					avgRating: 0,
+					suggestions: 0,
 					description: 'Czaszka człowieka składa się z 29 kości, połączonych najczęściej więzadłami i ruchomym stawem skroniowo-żuchwowym (articulatio temporomandibularis). Kości czaszki dzielą się na część mózgową (neurocranium) i twarzową (splanchnocranium), z wyróżnieniem kości parzystych i nieparzystych. Całość połączona jest około 31 szwami, które kostnieją w różnym czasie, a ich budowa odróżnia człowieka od innych naczelnych.'
 				},
 				{

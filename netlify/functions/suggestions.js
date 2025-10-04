@@ -112,9 +112,7 @@ router.get('/', (req, res) => {
 // Sugestie dla konkretnego zbioru
 router.get('/datasets/:id/suggestions', (req, res) => {
     const datasetId = parseInt(req.params.id);
-    console.log(datasetId)
     const filtered = suggestions.filter(s => s.datasetId === datasetId);
-    console.log(filtered);
     res.json({ success: true, data: filtered });
 });
 

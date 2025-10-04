@@ -76,7 +76,7 @@ let reviews = [
     },
     {
         id: 7,
-        datasetId: 4,
+        datasetId: 5,
         reviewer: 'Dr Tomasz Lewandowski',
         title: 'Przydatny zbiór, ale wymaga dokumentacji',
         rating: 3.5,
@@ -88,7 +88,7 @@ let reviews = [
     },
     {
         id: 8,
-        datasetId: 4,
+        datasetId: 5,
         reviewer: 'Prof. Magdalena Zielińska',
         title: 'Świetny zestaw danych do analizy statystycznej',
         rating: 4.5,
@@ -115,7 +115,7 @@ router.get('/:id', (req, res) => {
 
 // GET /api/datasets/:id/reviews - recenzje dla zbioru
 router.get('/datasets/:id/reviews', (req, res) => {
-    const datasetId = Number(req.params.id);
+    const datasetId = parseInt(req.params.id);
     const datasetReviews = reviews.filter(r => r.datasetId === datasetId);
     res.json({ success: true, data: datasetReviews });
 });

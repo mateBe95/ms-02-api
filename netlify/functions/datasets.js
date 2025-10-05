@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
 					title: 'Zbiór danych genomicznych bakterii E. coli',
 					author: 'Dr Anna Kowalska',
 					date: '2024-09-15',
-					reviews: 3,
+					reviews: 2,
 					avgRating: 4.2,
-					suggestions: 5,
+					suggestions: 3,
 					description: 'Kompletny zbiór sekwencji genomowych z 500 próbek bakterii E. coli zebranych w latach 2020-2024 z różnych środowisk.'
 				},
 				{
